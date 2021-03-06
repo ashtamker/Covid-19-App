@@ -1,23 +1,38 @@
 
-const baseEndpoint = 'https://restcountries.herokuapp.com/api/v1';
+const countryApi = 'https://restcountries.herokuapp.com/api/v1';
 const proxyKey = 'https://api.allorigins.win/raw?url';
+const covidApi = 'https://corona-api.com/countries';
 
+const area = {};
 
 async function getCountries() {
-    const response = await fetch(`${proxyKey}=${baseEndpoint}`);
+    const response = await fetch(`${proxyKey}=${countryApi}`);
     const data = await response.json();
-    const countryInRegion = {};
+    const countryInRegion = [];
 
-    for(let i = 0; i < data.length; i++)
-     countryInRegion[data[i].name.common] = data[i].region;
+    for(let i = 0; i < data.length; i++){
 
-    return countryInRegion;
+     countryInRegion.push({name: data[i].name.common, region: data[i].region, key: data[i].cca2});
+    }
+     
+     countryInRegion.forEach(c => {
+         if(area[c.region])
+         area[c.region].push(c);
+         else 
+         area[c.region] = [c];
+     });  
     
+
 }
 
 console.log(getCountries()); 
 
- 
+
+
+
+
+
+
 
 var ctx = document.getElementById('canvas').getContext('2d');
 var myChart = new Chart(ctx, {
@@ -25,7 +40,7 @@ var myChart = new Chart(ctx, {
     data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [{
-            label: '# of Votes',
+            label: '#',
             data: [12, 11, 1, 5, 2, 23],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
