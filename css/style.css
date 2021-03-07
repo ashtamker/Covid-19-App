@@ -86,18 +86,16 @@ h2 {
 }
 
 .country-info *:last-child {
-  width: 18vw;
+  width: 15vw;
 }
 
 
 .theCountriesList * {
-  font-size: 22px;
+  font-size: 20px;
   background: none;
   margin: 10px;
   border: none;
-  outline: none;
   cursor: pointer;
-  border-radius: 16px;
   padding: 6px;
 }
 

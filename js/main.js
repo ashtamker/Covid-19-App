@@ -64,7 +64,7 @@ async function regionButton() {
 
     fillGraph(regionName);
     drawGraph();
-    createCountriesSection(regionName);
+    createTheCountries(regionName);
 };
 
 async function getRegionInfo(region) {
@@ -92,7 +92,7 @@ async function getRegionInfo(region) {
     area[region] = newRegion;
 };
 
-function createCountriesSection (region) {
+function createTheCountries (region) {
     theCountriesList.innerHTML = "";
     
     area[region].forEach(country => {
@@ -131,7 +131,7 @@ async function allCountriesHandler() {
     removeItem(countryInfo);
     fillGraph('all');
     drawGraph();
-    createCountriesSection('all');
+    createTheCountries('all');
 };
 
 let labels = [];
