@@ -90,7 +90,7 @@ h2 {
 }
 
 
-.listOfCountries * {
+.theCountriesList * {
   font-size: 22px;
   background: none;
   margin: 10px;
@@ -101,7 +101,7 @@ h2 {
   padding: 6px;
 }
 
-.listOfCountries *:hover {
+.theCountriesList *:hover {
   text-decoration: underline;
   
 }

@@ -1,8 +1,8 @@
 const countryApi = 'https://restcountries.herokuapp.com/api/v1';
-const proxykey = 'https://api.codetabs.com/v1/proxy/?quest';
+const proxykey = 'https://api.allorigins.win/raw?url'; 
 const covidApi = 'https://corona-api.com/countries';
 const regionsButtons = document.querySelector('.regions').children;
-const listOfCountries = document.querySelector('.listOfCountries');
+const theCountriesList = document.querySelector('.theCountriesList');
 const title = document.querySelector('.title');
 const countryInfo = document.querySelector('.country-info');
 const totalCases = document.querySelector('.country-info-totalCases').lastElementChild;
@@ -48,18 +48,18 @@ const isFetched = {
 };
 
 for(let i = 0; i < regionsButtons.length - 1; i++){
-    regionsButtons[i].addEventListener('click', regionButtonHandler);
+    regionsButtons[i].addEventListener('click', regionButton);
 };
 regionsButtons[regionsButtons.length - 1].addEventListener('click', allCountriesHandler);
 
-async function regionButtonHandler() {
+async function regionButton() {
     const regionName = this.textContent;
     title.textContent = regionName;
-    displayElement(title);
-    removeElement(countryInfo);
+    displayItem(title);
+    removeItem(countryInfo);
 
     if(isFetched[regionName] === false) {
-        await fetchRegionInfo(regionName);
+        await getRegionInfo(regionName);
     }
 
     fillGraph(regionName);
@@ -67,7 +67,7 @@ async function regionButtonHandler() {
     createCountriesSection(regionName);
 };
 
-async function fetchRegionInfo(region) {
+async function getRegionInfo(region) {
     isFetched[region] = true;
 
     const newRegion = [];
@@ -93,12 +93,12 @@ async function fetchRegionInfo(region) {
 };
 
 function createCountriesSection (region) {
-    listOfCountries.innerHTML = "";
+    theCountriesList.innerHTML = "";
     
     area[region].forEach(country => {
         const button = document.createElement('button');
         button.textContent = country.name;
-        listOfCountries.appendChild(button);
+        theCountriesList.appendChild(button);
         button.addEventListener('click', countryHandler.bind(country));
     });
 };
@@ -113,22 +113,22 @@ function countryHandler() {
     totalRecovered.textContent = this.totalRecovered;
     criticalCondition.textContent = this.criticalCondition;
 
-    removeElement(graph);
-    displayElement(countryInfo);
+    removeItem(graph);
+    displayItem(countryInfo);
 };
 
 async function allCountriesHandler() {
     const regionsNames = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
     for (let i = 0; i < regionsNames.length; i++){
         if(!isFetched[regionsNames[i]])
-            await fetchRegionInfo(regionsNames[i]);
+            await getRegionInfo(regionsNames[i]);
         area.all = area.all.concat(area[regionsNames[i]]);
     };
     
     title.textContent = 'All Countries';
 
-    displayElement(title);
-    removeElement(countryInfo);
+    displayItem(title);
+    removeItem(countryInfo);
     fillGraph('all');
     drawGraph();
     createCountriesSection('all');
@@ -151,7 +151,7 @@ function drawGraph(){
             },
         }
     });
-    displayElement(graph);
+    displayItem(graph);
 };
 
 function fillGraph(region) {
@@ -180,19 +180,17 @@ function newDataset(label, color){
         data:[],
         backgroundColor: color,
         borderColor: color,
-        pointRadius: 4,
-        pointHoverRadius: 15,
         type: 'bar',
         hidden: false,
         fill: false,
     }
 }
 
-function removeElement(element) {
-    element.classList.add('hide')
+function removeItem(item) {
+    item.classList.add('hide')
 };
 
-function displayElement(element) {
-    element.classList.remove('hide');
+function displayItem(item) {
+    item.classList.remove('hide');
 };
 
