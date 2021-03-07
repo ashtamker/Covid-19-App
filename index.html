@@ -8,8 +8,59 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+    <main class="flex">
+        <h1 class="title hide">israel</h1>
+        <div class="flex container regions">
+            <button>Africa</button>
+            <button>Americas</button>
+            <button>Asia</button>
+            <button>Europe</button>
+            <button>Oceania</button>
+            <button>All Countries</button>
+        </div>
+        <div class="graph hide">
+            <canvas id="canvas"></canvas>
+        </div>
 
-    <canvas id="canvas"></canvas>
+        <div class="flex container country-info hide">
+            <div class="country-info__total-cases">
+                <span class="title">Total Cases:</span>
+                </br>
+                <span class="info"></span>
+            </div>
+            <div class="country-info__new-cases">
+                <span class="title">New Cases:</span>
+                </br>
+                <span class="info"></span>
+            </div>
+            <div class="country-info__total-deaths">
+                <span class="title">Total Deaths:</span>
+                </br>
+                <span class="info"></span>
+            </div>
+            <div class="country-info__new-deaths">
+                <span class="title">New Deaths:</span>
+                </br>
+                <span class="info"></span>
+            </div>
+            <div class="country-info__total-recovered">
+                <span class="title">Total Recovered:</span>
+                </br>
+                <span class="info"></span>
+            </div>
+            <div class="country-info__in-critical-condition">
+                <span class="title">In Critical Condition:</span>
+                </br>
+                <span class="info"></span>
+            </div>
+        </div>
+
+       
+    
+        <div class="flex container listOfCountries">
+        </div>
+    </main>
+  
     
 </body>
 <script src="./js/main.js"></script>
