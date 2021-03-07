@@ -1,41 +1,44 @@
-
 const countryApi = 'https://restcountries.herokuapp.com/api/v1';
-const proxyKey = 'https://api.allorigins.win/raw?url';
+const proxykey = 'https://api.codetabs.com/v1/proxy/?quest';
 const covidApi = 'https://corona-api.com/countries';
-const countryInfo = document.querySelector('.country-info');
-const totalCases = document.querySelector('.country-info__total-cases').lastElementChild;
-const newCases = document.querySelector('.country-info__new-cases').lastElementChild;
-const totalDeaths = document.querySelector('.country-info__total-deaths').lastElementChild;
-const newDeaths = document.querySelector('.country-info__new-deaths').lastElementChild;
-const totalRecovered = document.querySelector('.country-info__total-recovered').lastElementChild;
-const criticalCondition = document.querySelector('.country-info__in-critical-condition').lastElementChild;
-const graph = document.querySelector('.graph');
 const regionsButtons = document.querySelector('.regions').children;
 const listOfCountries = document.querySelector('.listOfCountries');
 const title = document.querySelector('.title');
+const countryInfo = document.querySelector('.country-info');
+const totalCases = document.querySelector('.country-info-totalCases').lastElementChild;
+const newCases = document.querySelector('.country-info-newCases').lastElementChild;
+const totalDeaths = document.querySelector('.country-info-totalDeaths').lastElementChild;
+const newDeaths = document.querySelector('.country-info-newDeaths').lastElementChild;
+const totalRecovered = document.querySelector('.country-info-totalRecovered').lastElementChild;
+const criticalCondition = document.querySelector('.country-info-CriticalCondition').lastElementChild;
+const graph = document.querySelector('.graph');
+
 
 const area = {};
 
 async function getCountries() {
-    const response = await fetch(`${proxyKey}=${countryApi}`);
+    const response = await fetch(`${proxykey}=${countryApi}`);
     const data = await response.json();
     const countryInRegion = [];
 
     for(let i = 0; i < data.length; i++){
-    if(!['Kosovo'].includes(data[i].name.common))
-     countryInRegion.push({name: data[i].name.common, region: data[i].region, key: data[i].cca2});
+        if(!['Kosovo'].includes(data[i].name.common))
+        countryInRegion.push({name: data[i].name.common, region: data[i].region, code: data[i].cca2 })
     }
-     
-     countryInRegion.forEach(c => {
-         if(area[c.region])
-         area[c.region].push(c);
-         else 
-         area[c.region] = [c];
-     });  
-    
 
+    
+    countryInRegion.forEach(country => {
+        if(area[country.region])
+            area[country.region].push(country);
+        else 
+        area[country.region] = [country];
+    });   
+
+    area.all = [];
 }
-console.log(getCountries()); 
+
+
+getCountries();
 
 const isFetched = {
     Europe: false,
@@ -56,7 +59,6 @@ async function regionButtonHandler() {
     displayElement(title);
     removeElement(countryInfo);
 
-   
     if(isFetched[regionName] === false) {
         await fetchRegionInfo(regionName);
     }
@@ -121,7 +123,7 @@ async function allCountriesHandler() {
     for (let i = 0; i < regionsNames.length; i++){
         if(!isFetched[regionsNames[i]])
             await fetchRegionInfo(regionsNames[i]);
-            area.all = area.all.concat(area[regionsNames[i]]);
+        area.all = area.all.concat(area[regionsNames[i]]);
     };
     
     title.textContent = 'All Countries';
@@ -132,7 +134,6 @@ async function allCountriesHandler() {
     drawGraph();
     createCountriesSection('all');
 };
-
 
 let labels = [];
 let datasets = [];
@@ -158,10 +159,10 @@ function fillGraph(region) {
     labels = [];
     datasets = [];
     datasets = [
-        newDataset('Confirmed Cases', 'red'),
-        newDataset('Number Of Deaths', 'black'),
-        newDataset('Number Of Recovered', 'green'),
-        newDataset('Number Of Critical Condition', 'purple'),
+        newDataset('Confirmed', 'red'),
+        newDataset('Deaths', 'black'),
+        newDataset('Recovered', 'green'),
+        newDataset('Critical Condition', 'purple'),
     ];
 
     const countries = area[region];
@@ -195,6 +196,4 @@ function removeElement(element) {
 function displayElement(element) {
     element.classList.remove('hide');
 };
-
-
 
