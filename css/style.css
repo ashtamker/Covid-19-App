@@ -19,10 +19,23 @@ body {
   align-items: center;
   justify-content: center;
 }
+.main-title {
+  text-decoration: underline;
+  font-size: 56px;
+  font-weight: 300;
+  text-align: center;
+}
 
 section {
   flex-direction: column;
 }
+h2 {
+  font-size: 42px;
+  font-weight: 200;
+  margin: 20px;
+  text-decoration: underline;
+}
+
 
 .container {
   flex-wrap: wrap;
@@ -71,15 +84,6 @@ section {
   padding: 8px;
   color: white;
 }
-
-h1 {
-  font-size: 6rem;
-  font-weight: 200;
-  margin: 20px;
-  text-decoration: underline;
-}
-
-
 
 .country-info *:last-child {
   width: 18vw;

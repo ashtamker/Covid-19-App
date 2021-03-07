@@ -37,7 +37,6 @@ async function getCountries() {
     area.all = [];
 }
 
-
 getCountries();
 
 const isFetched = {
@@ -100,12 +99,12 @@ function createCountriesSection (region) {
         const button = document.createElement('button');
         button.textContent = country.name;
         listOfCountries.appendChild(button);
-        button.addEventListener('click', countryButtonHandler.bind(country));
+        button.addEventListener('click', countryHandler.bind(country));
     });
 };
 
 
-function countryButtonHandler() {
+function countryHandler() {
     title.textContent = this.name;
     totalCases.textContent = this.totalCases;
     newCases.textContent = this.newCases;
